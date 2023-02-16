@@ -23,7 +23,7 @@ float doLambertShading() {
     float diffuseTerm = dot(normalize(fs_Nor), normalize(fs_LightVec));
     diffuseTerm = clamp(diffuseTerm, 0, 1);
 
-    float ambientTerm = 0.3;
+    const float ambientTerm = 0.3;
 
     return diffuseTerm + ambientTerm;
 }

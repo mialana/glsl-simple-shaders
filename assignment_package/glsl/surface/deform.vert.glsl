@@ -14,20 +14,8 @@ in vec2 vs_UV;
 
 out vec3 fs_Pos;
 out vec3 fs_Nor;
-out vec2 fs_UV;
-out vec4 fs_LightVec;
 
-void main()
-{
-    // TODO Homework 4
-    fs_UV = vs_UV;
-    fs_Nor = normalize(u_ModelInvTr * vec3(vs_Nor));
-
-    vec4 modelposition = u_Model * vs_Pos;
-
-//    float t = cos(float(u_Time) * 0.1f);
-//    t *= length(modelposition.xz) * 0.25;
-
+void deform(inout vec4 v) {
     float minY = -0.5;
     float maxY = 0.5;
     float stripY1 = sin(u_Time * 0.01f) * 5.f;
@@ -38,26 +26,24 @@ void main()
     float B1 = maxY + stripY1;
     float B2 = maxY + stripY2;
 
-    if (modelposition.y > A1 && modelposition.y < B1 ||
-        modelposition.y > A2 && modelposition.y < B2) {
-        float t = 0.1f * (-modelposition.y + 5.f) + 1.f;
-        modelposition.x *= t;
-        modelposition.z *= t;
+    if (v.y > A1 && v.y < B1 ||
+        v.y > A2 && v.y < B2) {
+        float t = 0.1f * (-v.y + 5.f) + 1.f;
+        v.x *= t;
+        v.z *= t;
     }
+}
 
-    fs_LightVec = vec4(u_EyePos, 1) - modelposition;
+void main()
+{
+    // TODO Homework 4
+    fs_Nor = normalize(u_ModelInvTr * vec3(vs_Nor));
 
-//    vec4 modelposition = u_Model * vs_Pos;
-//    float t = (sin(float(u_Time) * 0.05f) + 1.f) * 0.5f;
+    vec4 modelposition = u_Model * vs_Pos;
 
-//    vec4 normalized = normalize(modelposition);
+    deform(modelposition);
 
-//    modelposition.x = mix(modelposition.x, normalized.x, t);
-//    modelposition.y = mix(modelposition.y, normalized.y, t);
-//    modelposition.z = mix(modelposition.z, normalized.z, t);
-
-
-//    fs_Pos = vec3(modelposition);
+    fs_Pos = vec3(modelposition);
 
     gl_Position = u_Proj * u_View * modelposition;
 }
