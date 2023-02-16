@@ -16,6 +16,8 @@ uniform mat3 u_ModelInvTr;  // The inverse transpose of the model matrix.
                             // This allows us to transform the object's normals properly
                             // if the object has been non-uniformly scaled.
 
+uniform vec3 u_EyePos;
+
 uniform mat4 u_View;        // The matrix that defines the camera's transformation.
 uniform mat4 u_Proj;        // The matrix that defines the camera's projection.
 
@@ -43,7 +45,7 @@ void main()
 
     vec4 modelposition = u_Model * vs_Pos;   // Temporarily store the transformed vertex positions for use below
 
-    fs_LightVec = (inverse(u_View) * vec4(0,0,0,1)) - modelposition;  // Compute the direction in which the light source lies
+    fs_LightVec = vec4(u_EyePos, 1) - modelposition;  // Compute the direction in which the light source lies
 
     gl_Position = u_Proj * u_View * modelposition;// gl_Position is a built-in variable of OpenGL which is
                                                   // used to render the final positions of the geometry's vertices

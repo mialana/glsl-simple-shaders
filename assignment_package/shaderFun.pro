@@ -52,3 +52,6 @@ address_sanitizer {
 HEADERS +=
 
 SOURCES +=
+
+DISTFILES += \
+    ../help-log.txt

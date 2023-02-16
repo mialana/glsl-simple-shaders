@@ -17,7 +17,7 @@ void main()
     vec3 fs_Nor = normalize(u_ModelInvTr * vec3(vs_Nor));
     fs_Nor = mat3(u_View) * fs_Nor;
 
-    fs_UV = vs_UV;
+    fs_UV = (fs_Nor.xy + vec2(1.f)) * 0.5;
 
     vec4 modelposition = u_Model * vs_Pos;
     gl_Position = u_Proj * u_View * modelposition;

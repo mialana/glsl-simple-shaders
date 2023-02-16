@@ -5,7 +5,6 @@
 class SurfaceShader : public ShaderProgram
 {
 public:
-
     int attrPos; // A handle for the "in" vec4 representing vertex position in the vertex shader
     int attrNor; // A handle for the "in" vec4 representing vertex normal in the vertex shader
     int attrUV; // A handle for the "in" vec2 representing the UV coordinates in the vertex shader
@@ -14,6 +13,7 @@ public:
     int unifModelInvTr; // A handle for the "uniform" mat4 representing inverse transpose of the model matrix in the vertex shader
     int unifView; // A handle for the "uniform" mat4 representing the view matrix in the vertex shader
     int unifProj; // A handle for the "uniform" mat4 representing the projection matrix in the vertex shader
+    int unifEyePos;
 
 public:
     SurfaceShader(OpenGLContext* context);
@@ -24,7 +24,7 @@ public:
     // Draw the given object to our screen using this ShaderProgram's shaders
     virtual void draw(Drawable &d, int textureSlot) override;
 
-
+    void setEyePos(const glm::vec3 &eye);
     // Pass the given model matrix to this shader on the GPU
     void setModelMatrix(const glm::mat4 &model);
     // Pass the given Projection * View matrix to this shader on the GPU

@@ -1,4 +1,5 @@
 #include "surfaceshader.h"
+#include <iostream>
 
 
 SurfaceShader::SurfaceShader(OpenGLContext *context)
@@ -20,6 +21,7 @@ void SurfaceShader::setupMemberVars()
     unifModelInvTr = context->glGetUniformLocation(prog, "u_ModelInvTr");
     unifView       = context->glGetUniformLocation(prog, "u_View");
     unifProj       = context->glGetUniformLocation(prog, "u_Proj");
+    unifEyePos      = context->glGetUniformLocation(prog, "u_EyePos");
 
     unifSampler2D  = context->glGetUniformLocation(prog, "u_Texture");
     unifTime = context->glGetUniformLocation(prog, "u_Time");
@@ -69,6 +71,15 @@ void SurfaceShader::draw(Drawable &d, int textureSlot = 0)
     context->printGLErrorLog();
 }
 
+void SurfaceShader::setEyePos(const glm::vec3 &eye)
+{
+    useMe();
+
+    if (unifEyePos != -1) {
+        context->glUniform3f(unifEyePos, eye.x, eye.y, eye.z);
+
+    }
+}
 
 void SurfaceShader::setModelMatrix(const glm::mat4 &model)
 {

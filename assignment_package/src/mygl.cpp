@@ -81,6 +81,7 @@ void MyGL::resizeGL(int w, int h)
 //For example, when the function update() is called, paintGL is called implicitly.
 void MyGL::paintGL()
 {
+    mp_progSurfaceCurrent->setEyePos(m_camera.eye);
     render3DScene();
 
     performPostprocessRenderPass();

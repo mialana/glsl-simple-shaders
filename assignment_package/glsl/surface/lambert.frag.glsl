@@ -26,7 +26,7 @@ void main()
     // Avoid negative lighting values
     diffuseTerm = clamp(diffuseTerm, 0, 1);
 
-    float ambientTerm = 0.2;
+    float ambientTerm = 0.3;
 
     float lightIntensity = diffuseTerm + ambientTerm;   //Add a small float value to the color multiplier
                                                         //to simulate ambient lighting. This ensures that faces that are not
@@ -34,5 +34,4 @@ void main()
 
     // Compute final shaded color
     out_Col = vec3(diffuseColor.rgb * lightIntensity);
-//    out_Col = normalize(abs(fs_Nor));
 }

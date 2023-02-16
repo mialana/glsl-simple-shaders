@@ -2,11 +2,53 @@
 #include <tinyobj/tiny_obj_loader.h>
 #include <iostream>
 #include <QFile>
+#include <glm/gtx/rotate_vector.hpp>
+
+//std::cout << "(" << v.x << ", " << v.y << ", " << v.z << ", " << v.w << ")" << std::endl;
 
 Mesh::Mesh(OpenGLContext *context)
     : Drawable(context),
       mp_texture(nullptr), mp_bgTexture(nullptr)
 {}
+
+void setUpVertexPositions(std::vector<glm::vec4>& pos) {
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 4; j++) {
+            glm::vec4 vFront = glm::rotateZ(glm::vec4(1, 1, 1, 1), j * 90.f);
+            pos.push_back(vFront);
+            glm::vec4 vBack = glm::rotateZ(glm::vec4(1, 1, -1, 1), j * 90.f);
+            pos.push_back(vBack);
+        }
+    }
+
+}
+
+void setUpVertexNormals(std::vector<glm::vec4>& nor) {
+    std::vector order {1, 1, -1, -1, -1, -1, 1, 1,
+                       1, 1, 1, 1, -1, -1, -1, -1,
+                       1, -1, 1, -1, 1, -1, 1, -1};
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 8; j++) {
+            glm::vec4 v = glm::vec4(0, 0, 0, 0);
+            v[i] = order[i * 8 + j];
+            nor.push_back(v);
+        }
+    }
+}
+
+void setUpVertexUVs(std::vector<glm::vec2>& uvs) {
+    std::vector coords {glm::vec2(0, 0),
+                        glm::vec2(1, 0),
+                        glm::vec2(1, 1),
+                        glm::vec2(0, 1)};
+    std::vector order {3, 2, 2, 3, 1, 0, 0, 1,
+                       1, 2, 0, 3, 3, 0, 2, 1,
+                       2, 3, 3, 2, 0, 1, 1, 0};
+    for (int i = 0; i < 24; i++) {
+        uvs.push_back(coords.at(order[i]));
+    }
+
+}
 
 void Mesh::createCube(const char *textureFile, const char *bgTextureFile)
 {
@@ -19,24 +61,23 @@ void Mesh::createCube(const char *textureFile, const char *bgTextureFile)
 
     // TODO: Create VBO data for positions, normals, UVs, and indices
 
-    std::vector<glm::vec4> pos {glm::vec4(-2, -2, 0, 1),
-                                glm::vec4(2, -2, 0, 1),
-                                glm::vec4(2, 2, 0, 1),
-                                glm::vec4(-2, 2, 0, 1)};
+    std::vector<glm::vec4> pos;
+    setUpVertexPositions(pos);
 
-    std::vector<glm::vec4> nor {glm::vec4(0, 0, 1, 0),
-                                glm::vec4(0, 0, 1, 0),
-                                glm::vec4(0, 0, 1, 0),
-                                glm::vec4(0, 0, 1, 0)};
+    std::vector<glm::vec4> nor;
+    setUpVertexNormals(nor);
 
-    std::vector<glm::vec2> uvs {glm::vec2(0, 0),
-                                glm::vec2(1, 0),
-                                glm::vec2(1, 1),
-                                glm::vec2(0, 1)};
+    std::vector<glm::vec2> uvs;
+    setUpVertexUVs(uvs);
 
-    std::vector<GLuint> idx {0, 1, 2, 0, 2, 3};
+    std::vector<GLuint> idx {6, 7, 1, 6, 1, 0,
+                            5, 4, 2, 5, 2, 3,
+                            10, 8, 9, 10, 9, 11,
+                            13, 15, 14, 13, 14, 12,
+                            20, 22, 16, 20, 16, 18,
+                            23, 21, 19, 23, 19, 17};
 
-    count = 6; // TODO: Set "count" to the number of indices in your index VBO
+    count = 36; // TODO: Set "count" to the number of indices in your index VBO
 
     generateIdx();
     context->glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bufIdx);

@@ -1,0 +1,1 @@
+https://registry.khronos.org/OpenGL-Refpages/gl4/html/glUniform.xhtml - used to find out how to use glUniform methods

@@ -19,8 +19,24 @@ in vec4 fs_Pos;
 
 layout(location = 0) out vec3 out_Col;//This is the final output color that you will see on your screen for the pixel that is currently being processed.
 
+float doLambertShading() {
+    float diffuseTerm = dot(normalize(fs_Nor), normalize(fs_LightVec));
+    diffuseTerm = clamp(diffuseTerm, 0, 1);
+
+    float ambientTerm = 0.3;
+
+    return diffuseTerm + ambientTerm;
+}
+
 void main()
 {
-    // TODO Homework 4
-    out_Col = vec3(0, 0, 0);
+    vec4 diffuseColor = texture(u_Texture, fs_UV);
+
+    vec4 avgVec = (normalize(fs_LightVec) + normalize(fs_CameraPos)) / 2;
+
+    float specularIntensity = max(pow(dot(normalize(avgVec), normalize(fs_Nor)), 64.f), 0.f);
+
+    float lightIntensity = doLambertShading() + specularIntensity;
+
+    out_Col = vec3(diffuseColor.rgb * lightIntensity);
 }
