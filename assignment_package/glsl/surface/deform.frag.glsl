@@ -49,18 +49,18 @@ float fbm(vec3 x) {
 
 void main()
 {
-    float diffuseTerm = fbm(fs_Nor);
-    diffuseTerm = smoothstep(0.f, 1.f, diffuseTerm);
+    float offset = fbm(fs_Nor);
+    offset = smoothstep(0.f, 1.f, offset);
 
-    float t = sin(u_Time * 0.01f);
+    float t = sin(u_Time * 0.03f);
 
-    float red1 = 0.5f + 0.5f * cos(2.f * radians(180.f) * (1.f * diffuseTerm + 0.5f));
-    float green1 = 0.5f + 0.5f * cos(2.f * radians(180.f) * (1.f * diffuseTerm + 0.7f));
-    float blue1 = 0.5f + 0.5f * cos(2.f * radians(180.f) * (1.f * diffuseTerm + 0.9f));
+    float red1 = 0.5f + 0.5f * cos(2.f * radians(180.f) * (1.f * offset + 0.5f));
+    float green1 = 0.5f + 0.5f * cos(2.f * radians(180.f) * (1.f * offset + 0.7f));
+    float blue1 = 0.5f + 0.5f * cos(2.f * radians(180.f) * (1.f * offset + 0.9f));
 
-    float red2 = 0.5f + 0.5f * cos(2.f * radians(180.f) * (1.f * diffuseTerm + 0.3f));
-    float green2 = 0.5f + 0.5f * cos(2.f * radians(180.f) * (1.f * diffuseTerm + 0.5f));
-    float blue2 = 0.5f + 0.5f * cos(2.f * radians(180.f) * (1.f * diffuseTerm + 0.4f));
+    float red2 = 0.5f + 0.5f * cos(2.f * radians(180.f) * (1.f * offset + 0.3f));
+    float green2 = 0.5f + 0.5f * cos(2.f * radians(180.f) * (1.f * offset + 0.5f));
+    float blue2 = 0.5f + 0.5f * cos(2.f * radians(180.f) * (1.f * offset + 0.4f));
 
     float red = mix(red1, red2, t);
     float green = mix(green1, green2, t);

@@ -17,13 +17,13 @@ in vec2 fs_UV;
 in vec4 fs_CameraPos;
 in vec4 fs_Pos;
 
+const float ambientTerm = 0.3;
+
 layout(location = 0) out vec3 out_Col;//This is the final output color that you will see on your screen for the pixel that is currently being processed.
 
 float doLambertShading() {
     float diffuseTerm = dot(normalize(fs_Nor), normalize(fs_LightVec));
     diffuseTerm = clamp(diffuseTerm, 0, 1);
-
-    const float ambientTerm = 0.3;
 
     return diffuseTerm + ambientTerm;
 }
