@@ -34,9 +34,5 @@ void main()
         }
     }
 
-    float x = distance(horGrad.x, vertGrad.x);
-    float y = distance(horGrad.y, vertGrad.y);
-    float z = distance(horGrad.z, vertGrad.z);
-
     color = sqrt((horGrad * horGrad) + (vertGrad * vertGrad));
 }

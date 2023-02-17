@@ -103,7 +103,7 @@ void main()
 {
     float t = sin(u_Time * 0.03f);
 
-    float worley = worleyNoise(fs_UV);
+    float worley = mix(0.5, worleyNoise(fs_UV), t);
 
     float perlin = perlinNoise(fs_UV);
 
