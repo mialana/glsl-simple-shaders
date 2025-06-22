@@ -1,6 +1,6 @@
 QT += core widgets opengl openglwidgets
 
-TARGET = ShaderFun
+TARGET = GLSLSimpleShaders
 TEMPLATE = app
 CONFIG += console
 CONFIG += c++11

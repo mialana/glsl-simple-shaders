@@ -1,5 +1,0 @@
-https://registry.khronos.org/OpenGL-Refpages/gl4/html/glUniform.xhtml - used to find out how to use glUniform methods
-
-https://graphtoy.com - used to visualize deformation for deform shader
-
-Rachel Lin: 2/16 11:50pm - Helped me understand the concepts behind sobel shader.
