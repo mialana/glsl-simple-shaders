@@ -8,4 +8,4 @@ A collection of surface and post-process shaders to demonstrate GLSL best practi
 
 ### Build Instructions
 
-The easiest way to get this program running is to use an IDE like QT Creator and select the project root file at `assignment_package/glslSimpleShaders.pro`.
+The easiest way to get this program running is to use an IDE like QT Creator and select the project root file at `glslSimpleShaders/glslSimpleShaders.pro`.
